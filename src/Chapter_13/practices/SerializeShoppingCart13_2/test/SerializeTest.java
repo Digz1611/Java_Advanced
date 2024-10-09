@@ -1,15 +1,18 @@
 package Chapter_13.practices.SerializeShoppingCart13_2.test;
 
-import com.example.domain.Item;
-import com.example.domain.ShoppingCart;
-
-import java.io.*;
+import Chapter_13.practices.SerializeShoppingCart13_2.domain.Item;
+import Chapter_13.practices.SerializeShoppingCart13_2.domain.ShoppingCart;
+import java.io.BufferedReader;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.ObjectOutputStream;
 import java.text.NumberFormat;
 
 public class SerializeTest {
 
     public static void main(String[] args) {
-        String directory = "/home/oracle/labs/13-IO_Fundamentals/practices/practice2/SerializeShoppingCart";
+        String directory = "/SerializeShoppingCart";
         String cartId = null;
         ShoppingCart cart = null;
         System.out.println("Enter the ID of the cart file to create and serialize or q exit.");
@@ -20,7 +23,7 @@ public class SerializeTest {
             if (cartId.equals("q")) {
                 System.exit(0);
             }
-            cart = new ShoppingCart(new Integer(cartId).intValue());
+            cart = new ShoppingCart(Integer.parseInt(cartId));
         } catch (IOException | NumberFormatException e) { // Catch any IO exceptions.
             System.out.println("Exception: " + e);
             System.exit(-1);
@@ -38,7 +41,7 @@ public class SerializeTest {
         // Now serialize the cart
         String cartFile = directory + "cart" + cart.getCartID() + ".ser";
         try (FileOutputStream fos = new FileOutputStream(cartFile);
-                ObjectOutputStream o = new ObjectOutputStream(fos)) {
+             ObjectOutputStream o = new ObjectOutputStream(fos)) {
             o.writeObject(cart);
         } catch (IOException e) {
             System.out.println("Exception serializing " + cartFile + ": " + e);

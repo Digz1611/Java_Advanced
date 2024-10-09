@@ -1,17 +1,20 @@
 package Chapter_13.practices.SerializeShoppingCart13_2.test;
 
-import com.example.domain.Item;
-import com.example.domain.ShoppingCart;
-
-import java.io.*;
+import Chapter_13.practices.SerializeShoppingCart13_2.domain.ShoppingCart;
+import Chapter_13.practices.SerializeShoppingCart13_2.domain.Item;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
 import java.text.NumberFormat;
 import java.util.List;
 
 public class DeserializeTest {
 
     public static void main(String[] args) {
-        String directory = "/home/oracle/labs/13-IO_Fundamentals/practices/practice2/SerializeShoppingCart";
-         String cartId = null;
+        String directory = "/SerializeShoppingCart";
+        String cartId = null;
         System.out.println("Enter the ID of the cart file to deserialize or q exit.");
         // Wrap the System.in InputStream with a BufferedReader to read
         // each line from the keyboard.
@@ -29,7 +32,7 @@ public class DeserializeTest {
         String cartFile = directory + "cart" + cartId + ".ser";
         ShoppingCart cart = null;
         try (FileInputStream fis = new FileInputStream(cartFile);
-                ObjectInputStream in = new ObjectInputStream(fis)) {
+             ObjectInputStream in = new ObjectInputStream(fis)) {
             cart = (ShoppingCart) in.readObject();
         } catch (ClassNotFoundException | IOException e) {
             System.out.println("Exception deserializing " + cartFile + ": " + e);
